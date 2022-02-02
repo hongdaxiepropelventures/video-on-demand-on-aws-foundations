@@ -20,12 +20,12 @@ const setDefaults = async (bucket) => {
         await s3.putObject({
             Body: fs.readFileSync('./lib/s3/job-settings.json', 'utf8'),
             Bucket: bucket,
-            Key: 'assets01/job-settings.json'
+            Key: 'video-compression/job-settings.json'
         }).promise();
         await s3.putObject({
             Body:"{\n\"Jobs\": []\n}",
             Bucket: bucket,
-            Key: 'jobs-manifest.json'
+            Key: 'video-compression/jobs-manifest.json'
         }).promise();
     } catch (err) {
         throw err;

@@ -23,13 +23,15 @@ exports.handler = async (event) => {
     try {
         const status = event.detail.status;
 
+        const jobManifest = `video-compression/${JOB_MANIFEST}`
+
         switch (status) {
             case 'INPUT_INFORMATION':
                 /**
                  * Write source info to the job manifest
                  */
                 try {
-                    await utils.writeManifest(SOURCE_BUCKET,JOB_MANIFEST,event);
+                    await utils.writeManifest(SOURCE_BUCKET,jobManifest,event);
                 } catch (err) {
                     throw err;
                 }
@@ -43,7 +45,7 @@ exports.handler = async (event) => {
                     /**
                      * update the master manifest file in s3
                      */
-                    const results = await utils.writeManifest(SOURCE_BUCKET,JOB_MANIFEST,jobDetails);
+                    const results = await utils.writeManifest(SOURCE_BUCKET,jobManifest,jobDetails);
                     /**
                      * if enabled send annoymous data to the solution builder api, this helps us with future release
                      */
