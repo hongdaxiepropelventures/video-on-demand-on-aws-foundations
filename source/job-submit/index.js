@@ -28,7 +28,7 @@ exports.handler = async (event,context) => {
         const settingsFile = `video-compression/${JOB_SETTINGS}`;
         const guid = uuidv4();
         const inputPath = `s3://${srcBucket}/${srcVideo}`;
-        const outputPath = `s3://${DESTINATION_BUCKET}/${guid}`;
+        const outputPath = `s3://${DESTINATION_BUCKET}/${srcVideo}`;
         const metaData = {
             Guid:guid,
             StackName:STACKNAME,
