@@ -60,25 +60,28 @@ export class VodFoundation extends cdk.Stack {
                 }]
             }
         };
+
+        const source = s3.Bucket.fromBucketArn(this, 'video-compression-hongda-test', 'arn:aws:s3:::video-compression-hongda-test')
         /**
          * Source S3 bucket to host source videos and jobSettings JSON files
         */
-        const source = new s3.Bucket(this, 'Source', {
-            serverAccessLogsBucket: logsBucket,
-            serverAccessLogsPrefix: 'source-bucket-logs/',
-            encryption: s3.BucketEncryption.S3_MANAGED,
-            publicReadAccess: false,
-            blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
-        });
-        const cfnSource = source.node.findChild('Resource') as s3.CfnBucket;
-        cfnSource.cfnOptions.metadata = {
-            cfn_nag: {
-                rules_to_suppress: [{
-                    id: 'W51',
-                    reason: 'source bucket is private and does not require a bucket policy'
-                }]
-            }
-        };
+        // const source = new s3.Bucket(this, 'Source', {
+        //     serverAccessLogsBucket: logsBucket,
+        //     serverAccessLogsPrefix: 'source-bucket-logs/',
+        //     encryption: s3.BucketEncryption.S3_MANAGED,
+        //     publicReadAccess: false,
+        //     blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+        // });
+        // const cfnSource = source.node.findChild('Resource') as s3.CfnBucket;
+        // cfnSource.cfnOptions.metadata = {
+        //     cfn_nag: {
+        //         rules_to_suppress: [{
+        //             id: 'W51',
+        //             reason: 'source bucket is private and does not require a bucket policy'
+        //         }]
+        //     }
+        // };
+
         /**
          * Destination S3 bucket to host the mediaconvert outputs
         */
@@ -355,11 +358,11 @@ export class VodFoundation extends cdk.Stack {
         /**
          * Stack Outputs
         */
-        new cdk.CfnOutput(this, 'SourceBucket', {
-            value: source.bucketName,
-            description: 'Source S3 Bucket used to host source video and MediaConvert job settings files',
-            exportName: `${ cdk.Aws.STACK_NAME}-SourceBucket`
-        });
+        // new cdk.CfnOutput(this, 'SourceBucket', {
+        //     value: source.bucketName,
+        //     description: 'Source S3 Bucket used to host source video and MediaConvert job settings files',
+        //     exportName: `${ cdk.Aws.STACK_NAME}-SourceBucket`
+        // });
         new cdk.CfnOutput(this, 'DestinationBucket', {
             value: destination.bucketName,
             description: 'Source S3 Bucket used to host all MediaConvert ouputs',
